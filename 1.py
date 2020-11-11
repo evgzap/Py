@@ -5,9 +5,9 @@ pygame.init()
 screenSize = (800,600)
 
 display = pygame.display.set_mode(screenSize)
-
-
-FPS = 60
+H_WIDTH = screenSize[0]/2
+H_HEIGHT = screenSize[1]/2
+FPS = 120
 clock = pygame.time.Clock()
 isgame = True
 
@@ -16,14 +16,30 @@ class Ball:
 		self.pos = pos
 		self.xPos = self.pos[0]
 		self.yPos = self.pos[1]
-		self.velociety = 3
-
+		if self.xPos < H_WIDTH:
+			self.velocietyX = -1
+		if self.xPos > H_WIDTH:
+			self.velocietyX = 1
+		if self.yPos < H_HEIGHT:
+			self.velocietyY = -1
+		if self.yPos>H_HEIGHT:
+			self.velocietyY = 1
 	def move(self):
-		if self.xPos > screenSize[0]:
-			self.velociety = -self.velociety
-		if self.xPos < 0:
-			self.velociety = -self.velociety
-		self.xPos+=1*self.velociety
+		if self.xPos+10 > screenSize[0]:
+			self.velocietyX = -self.velocietyX
+		if self.xPos-10 < 0:
+			self.velocietyX = -self.velocietyX
+
+		if self.yPos+10 > screenSize[1]:
+			# self.velocietyY = 4
+			self.velocietyY = -self.velocietyY
+		if self.yPos-10 < 0 :
+			self.velocietyY = -self.velocietyY
+
+		self.xPos+=1*self.velocietyX
+		self.yPos+=1*self.velocietyY
+		# self.velocietyY+=0.1
+		print(self.velocietyY)
 
 	def draw(self):
 		self.move()
