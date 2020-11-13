@@ -16,24 +16,30 @@ class Ball:
 		self.pos = pos
 		self.xPos = self.pos[0]
 		self.yPos = self.pos[1]
+		self.size = 1
 		if self.xPos < H_WIDTH:
-			self.velocietyX = -1
-		if self.xPos > H_WIDTH:
-			self.velocietyX = 1
+			self.velocietyX = -(H_WIDTH-self.xPos)/100
+
+		if self.xPos >= H_WIDTH:
+			self.velocietyX = (self.xPos-H_WIDTH)/100
+
 		if self.yPos < H_HEIGHT:
-			self.velocietyY = -1
-		if self.yPos>H_HEIGHT:
-			self.velocietyY = 1
+			self.velocietyY = -(H_HEIGHT-self.yPos)/100
+
+		if self.yPos>=H_HEIGHT:
+			self.velocietyY = (self.yPos-H_HEIGHT)/100
+
 	def move(self):
-		if self.xPos+10 > screenSize[0]:
+		if self.xPos+self.size > screenSize[0]:
 			self.velocietyX = -self.velocietyX
-		if self.xPos-10 < 0:
+			# self.velocietyX = -4
+		if self.xPos-self.size < 0:
 			self.velocietyX = -self.velocietyX
 
-		if self.yPos+10 > screenSize[1]:
+		if self.yPos+self.size > screenSize[1]:
 			# self.velocietyY = 4
 			self.velocietyY = -self.velocietyY
-		if self.yPos-10 < 0 :
+		if self.yPos-self.size < 0 :
 			self.velocietyY = -self.velocietyY
 
 		self.xPos+=1*self.velocietyX
@@ -44,7 +50,7 @@ class Ball:
 	def draw(self):
 		self.move()
 		
-		pygame.draw.circle(display, (255,255,255), (self.xPos, self.yPos), 10)
+		pygame.draw.circle(display, (255,255,255), (self.xPos, self.yPos), self.size)
 
 balls = []
 while isgame:
